@@ -1,9 +1,11 @@
 name: Publish MoCHi APK
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
       - ".github/workflows/publish-mochi-apk.yml"
+      - "apk-release-trigger.txt"
 
 permissions:
   contents: write
@@ -27,4 +29,4 @@ jobs:
         run: |
           set -euo pipefail
           gh release delete "$TAG" --repo "$GITHUB_REPOSITORY" --cleanup-tag -y 2>/dev/null || true
-          gh release create "$TAG" MoCHi.apk             --repo "$GITHUB_REPOSITORY"             --title "MoCHi Android Preview"             --notes "Android preview build for direct testing. SHA-256: 58fa91d6545067ace79ee9f424f11df960de6e8f88a760dace1e32f11bcebae6"
+          gh release create "$TAG" MoCHi.apk --repo "$GITHUB_REPOSITORY" --title "MoCHi Android Preview" --notes "Android preview build for direct testing. SHA-256: 58fa91d6545067ace79ee9f424f11df960de6e8f88a760dace1e32f11bcebae6"
